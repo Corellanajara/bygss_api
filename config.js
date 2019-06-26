@@ -1,4 +1,4 @@
 module.exports = {
-    url: 'mongodb://localhost:27017/bygss',
+    url: 'mongodb://167.71.160.73:27017/bygss',
     serverport:4000
 }
