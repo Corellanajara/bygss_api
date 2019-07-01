@@ -13,6 +13,7 @@ const sucursalSchema = mongoose.Schema({
   FechaPago : String,
   Estado : Number,
   Persona : Array,
+  user_id : String,
 }, {
     timestamps: true
   });

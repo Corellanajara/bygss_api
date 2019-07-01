@@ -1,5 +1,5 @@
 const Producto = require('./producto.model.js');
-
+const admin = "5d1839ca7acb9c6267278051";
 //Create new producto
 exports.create = (req, res) => {
     // Request validation
@@ -23,6 +23,7 @@ exports.create = (req, res) => {
         FechaPago : req.body.FechaPago,
         Estado : req.body.Estado,
         Persona : req.body.Persona,
+        user_id : req.params.user_id,
     });
 
     producto.save()
@@ -37,18 +38,26 @@ exports.create = (req, res) => {
 
 // Retrieve all productoes from the database.
 exports.findAll = (req, res) => {
-    Producto.find()
-    .then(productoes => {
-        res.send(productoes);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Error en traer las productoes."
-        });
-    });
+  let busqueda = {user_id : req.params.user_id };
+  if(req.params.user_id == admin ){
+    busqueda = {};
+  }
+  Producto.find( busqueda )
+  .then(productoes => {
+      res.send(productoes);
+  }).catch(err => {
+      res.status(500).send({
+          message: err.message || "Error en traer las productoes."
+      });
+  });
 };
 
 exports.findByEstado = (req, res) => {
-    Producto.find( {Estado : req.params.estadoId } )
+    let busqueda = {Estado : req.params.estadoId , user_id : req.params.user_id }
+    if(req.params.user_id == admin ){
+      busqueda = {Estado : req.params.estadoId };
+    }
+    Producto.find( busqueda )
     .then(producto => {
         if(!producto) {
             return res.status(404).send({
@@ -111,6 +120,7 @@ exports.update = (req, res) => {
       FechaPago : req.body.FechaPago,
       Estado : req.body.Estado,
       Persona : req.body.Persona,
+      user_id : req.params.user_id,
     }, {new: true})
     .then(producto => {
         if(!producto) {

@@ -18,6 +18,7 @@ const config = require('./config.js');
 const mongoose = require('mongoose');
 
 require('./producto/producto.routes.js')(app);
+require('./usuario/usuario.routes.js')(app);
 
 mongoose.Promise = global.Promise;
 
