@@ -17,6 +17,7 @@ app.use(function(req, res, next) {
 const config = require('./config.js');
 const mongoose = require('mongoose');
 
+require('./nota/nota.routes.js')(app);
 require('./producto/producto.routes.js')(app);
 require('./usuario/usuario.routes.js')(app);
 
